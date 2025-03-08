@@ -8,6 +8,7 @@ const client = new pg.Client(
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
 );
 
+app.use(express.json());
 // static routes here (you only need these for deployment)
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("/", (req, res) =>
@@ -15,6 +16,7 @@ app.get("/", (req, res) =>
 );
 
 // app routes here
+//GETS
 app.get("/api/users", async (req, res, next) => {
   try {
     const SQL = `
@@ -41,23 +43,109 @@ app.get("/api/buses", async (req, res, next) => {
   }
 });
 
-//TypeError: Cannot read properties of undefined (reading &#39;username&#39;)
-app.post("/api/users", async (req, res, next) => {
+//POSTS
+app.post("/api/users/register", async (req, res, next) => {
   try {  
+    const {username, password} = req.body;
     const SQL = 
     `INSERT INTO users(username, password) 
     VALUES($1, $2) 
     RETURNING *`;
-    const result = await client.query({
+    const result = await client.query(
       SQL,
-      username: req.body.username,
-      password: req.body.password,
-    });
-    res.send(result);
+   [username,password]);
+
+    res.send(result.rows[0]);
   } catch (ex) {
     next(ex);
   }
 });
+
+app.post("/api/buses/register", async (req, res, next) => {
+  try {  
+    const {number} = req.body;
+    const SQL = 
+    `INSERT INTO buses(number) 
+    VALUES($1) 
+    RETURNING *`;
+    const result = await client.query(
+      SQL,
+   [number]);
+
+    res.send(result.rows[0]);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+//PATCH
+app.patch("/api/users/:id", async (req, res, next) => {
+  try {  
+    const {id} = req.params;
+    const {username, password} = req.body;
+    const SQL = 
+    `UPDATE users 
+    SET username=$1, password=$2
+    WHERE id = $3
+    RETURNING *`;
+    const result = await client.query(
+      SQL,
+   [username,password, id]);
+
+    res.send(result.rows[0]);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.patch("/api/buses/:id", async (req, res, next) => {
+  try {  
+    const {id} = req.params;
+    const {number} = req.body;
+    const SQL = 
+    `UPDATE buses 
+    SET number=$1
+    WHERE id = $2
+    RETURNING *`;
+    const result = await client.query(
+      SQL,
+   [number, id]);
+
+    res.send(result.rows[0]);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+//DELETE
+app.delete("/api/users/:id", async (req, res, next) => {
+  const {id} = req.params;
+  try {  
+  const SQL = `
+    DELETE FROM users
+    WHERE id = $1
+  `;
+  await client.query(SQL, [id]);
+  res.sendStatus(204);
+} catch (ex) {
+  next(ex);
+}
+});
+
+app.delete("/api/buses/:id", async (req, res, next) => {
+  const {id} = req.params;
+  try {  
+  const SQL = `
+    DELETE FROM buses
+    WHERE id = $1
+  `;
+  await client.query(SQL, [id]);
+  res.sendStatus(204);
+} catch (ex) {
+  next(ex);
+}
+});
+
 
 // create your init function
 const init = async () => {
@@ -76,7 +164,7 @@ const init = async () => {
   
         CREATE TABLE buses (
           id SERIAL PRIMARY KEY,
-          number INTEGER NOT NULL
+          number VARCHAR(50) NOT NULL
         );
 
         CREATE TABLE users_buses (
