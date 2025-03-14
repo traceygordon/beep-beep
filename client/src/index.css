@@ -31,7 +31,7 @@ body {
   margin: 0 0.5em 0.5em 0;
 }
 
-.books {
+.buses {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,7 +42,7 @@ body {
   margin: 0.5em 0.5em 0.5em 0.5em;
 }
 
-.books img {
+.bus img {
   display: flex;
   margin: auto;
   justify-content: center;
@@ -50,19 +50,6 @@ body {
   height: 12em;
   width: 10em;
   border: 0.06em solid black;
-}
-
-.bookInfo {
-  display: flex;
-  flex-direction: column;
-  height: 15%;
-  font-size: small;
-}
-
-.description {
-  display: flex;
-  margin-top: 1em;
-  height: 25%;
 }
 
 .button {

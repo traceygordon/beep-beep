@@ -10,8 +10,8 @@ export default function Navigation() {
 
   return (
     <div className="navbar">
-      <Link to={"/"}>
-        <h2>Home</h2>
+      <Link to={"/buses"}>
+        <h2>Buses</h2>
       </Link>
 
       <Link to={"/account"}>
