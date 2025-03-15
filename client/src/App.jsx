@@ -8,7 +8,7 @@ import Buses from "./components/Buses";
 import Header from "./components/Header";
 
 function App() {
-   const [token, setToken] = useState(localStorage.getItem("token") || "");
+  //  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
 
   return (
@@ -17,13 +17,13 @@ function App() {
       <Navigation />
       <Routes>
 
-        <Route path="/login" element={<Login token={token} />} />
+        <Route path="/login" element={<Login />} />
 
-        <Route path="/register" element={<Register setToken={setToken}/>} />
+        <Route path="/register" element={<Register />} />
 
-        <Route path="/account" element={<Account token={token} />}/>
+        <Route path="/account" element={<Account />}/>
 
-        <Route path="/buses" element={<Buses token={token} />}/>
+        <Route path="/buses" element={<Buses />}/>
         
     
       </Routes>

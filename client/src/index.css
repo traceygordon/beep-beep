@@ -64,7 +64,7 @@ body {
 
 .article {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   justify-content: space-evenly;
   gap: 1em;
 }

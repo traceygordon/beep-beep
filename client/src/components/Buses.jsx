@@ -1,31 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getBuses } from "../api/index.js";
 import SingleBus from "./SingleBus.jsx";
 import BusForm from "./BusForm.jsx";
 
-export default function Buses({token}) {
-    const [buses, setBuses] = useState([]);
-    
-    async function allBuses() {
-        const busData = await getBuses();
-        setBuses(busData);
-        console.log(busData)
-      }
-    
-      // useEffect(() => {
-      //   allBuses(buses);
-      // }, []);
+export default function Buses() {
+  const [buses, setBuses] = useState([{
+    id: null,
+    number: ""
+  }]);
 
-    return (
-        <div className="article">
-        <BusForm />
-          <SingleBus
-            // key={bus.id}
-            // bus={bus.number}
-            // pageName={"buses"}
-            // busData={busData}
-            token={token}
-          />
-      </div>
-  )
-  };
+  async function allBuses() {
+    const busData = await getBuses();
+    if (busData) { 
+      setBuses(busData);
+      console.log("Buses state updated:", busData);
+    } else {
+      console.error("No bus data received");
+    }
+  }
+
+  useEffect(() => {
+    allBuses();
+  }, []);
+
+  return (
+    <div className="article">
+      <BusForm getData={allBuses} />
+      {buses.length > 0 ? (
+        buses.map((bus) => <SingleBus key={bus.id} bus={bus} />)
+      ) : (
+        <p>No buses available</p>
+      )}
+    </div>
+  );
+}

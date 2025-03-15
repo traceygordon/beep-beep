@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { addBus } from "../api";
-import { useState } from "react";
 
 export default function BusForm({ getData }) {
   const [formData, setFormData] = useState({
@@ -10,14 +9,13 @@ export default function BusForm({ getData }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     await addBus(formData);
     getData();
 
     setFormData({
-     id: null,
-    number: ""
-    })
+      id: null,
+      number: ""
+    });
   }
 
   return (
@@ -30,13 +28,11 @@ export default function BusForm({ getData }) {
             type="text"
             value={formData.number}
             onChange={(e) => {
-              setFormData((prev) => ({ ...prev, name: e.target.value }));
+              setFormData((prev) => ({ ...prev, number: e.target.value }));
             }}
           />
         </label>
-        <button type="submit" onSubmit={handleSubmit}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );

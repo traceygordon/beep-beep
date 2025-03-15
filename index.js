@@ -3,12 +3,14 @@ express = require("express");
 const path = require("path");
 const pg = require("pg");
 const app = express();
+const cors = require("cors")
 const client = new pg.Client(
   process.env.DATABASE_URL ||
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
 );
 
 app.use(express.json());
+app.use(cors());
 // static routes here (you only need these for deployment)
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("/", (req, res) =>
@@ -61,22 +63,18 @@ app.post("/api/users/register", async (req, res, next) => {
   }
 });
 
-app.post("/api/buses/register", async (req, res, next) => {
+app.post("/api/buses", async (req, res, next) => {
   try {  
-    const {number} = req.body;
-    const SQL = 
-    `INSERT INTO buses(number) 
-    VALUES($1) 
-    RETURNING *`;
-    const result = await client.query(
-      SQL,
-   [number]);
+    const { number } = req.body;
+    const SQL = `INSERT INTO buses(number) VALUES($1) RETURNING *`;
+    const result = await client.query(SQL, [number]);
 
-    res.send(result.rows[0]);
+    res.json(result.rows[0]);
   } catch (ex) {
     next(ex);
   }
 });
+
 
 //PATCH
 app.patch("/api/users/:id", async (req, res, next) => {
