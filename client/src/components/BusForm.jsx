@@ -15,7 +15,7 @@ export default function BusForm({ getData }) {
     setFormData({
       id: null,
       number: ""
-    });
+    }); 
   }
 
   return (

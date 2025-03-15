@@ -1,21 +1,38 @@
-// imports here for express and pgconst
+// imports here
 express = require("express");
 const path = require("path");
 const pg = require("pg");
 const app = express();
 const cors = require("cors")
+const jwt = require("jsonwebtoken");
 const client = new pg.Client(
   process.env.DATABASE_URL ||
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
 );
+const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
+
 
 app.use(express.json());
 app.use(cors());
-// static routes here (you only need these for deployment)
+
+// static routes here
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "../client/dist/index.html"))
 );
+
+//Verify JWT tokens
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ error: "Access denied" });
+
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
+}
 
 // app routes here
 //GETS
@@ -31,6 +48,39 @@ app.get("/api/users", async (req, res, next) => {
     next(ex);
   }
 });
+
+app.get("/api/users/me", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
+
+    const SQL = "SELECT id, username FROM users WHERE id = $1";
+    const response = await client.query(SQL, [/* userId from token */]);
+
+    if (response.rows.length === 0) return res.status(404).json({ error: "User not found" });
+
+    res.json(response.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/users/me", authenticateToken, async (req, res, next) => {
+  try {
+    const SQL = "SELECT id, username FROM users WHERE id = $1";
+    const result = await client.query(SQL, [req.user.id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 app.get("/api/buses", async (req, res, next) => {
   try {
@@ -60,6 +110,28 @@ app.post("/api/users/register", async (req, res, next) => {
     res.send(result.rows[0]);
   } catch (ex) {
     next(ex);
+  }
+});
+
+app.post("/api/users/login", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    const SQL = "SELECT * FROM users WHERE username = $1";
+    const result = await client.query(SQL, [username]);
+    const user = result.rows[0];
+
+    if (!user || user.password !== password) {
+      return res.status(401).json({ error: "Invalid username or password" });
+    }
+
+    const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    res.json({ message: "Login successful", token, user });
+  } catch (error) {
+    next(error);
   }
 });
 

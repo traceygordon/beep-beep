@@ -1,6 +1,6 @@
 import { deleteBus } from "../api";
 
-export default function SingleBus({bus, token}) {
+export default function SingleBus({bus}) {
 
   async function handleDelete() {
     try {
@@ -14,8 +14,8 @@ export default function SingleBus({bus, token}) {
 
   return (
     <div className="buses">
-     <img className="img" src="lilbus.jpg" />
-      <h1> bus number here</h1>
+     <img className="img" src="lilbus.webp" />
+      <h1>{bus.number}</h1>
         <button className="button " onClick={handleDelete}>
           Delete Bus
         </button>

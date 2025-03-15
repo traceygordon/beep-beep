@@ -9,28 +9,30 @@ export default function Register({ setToken }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    
     if (formData.username.length < 1) {
-      setNameError(
-        "Stop! You need a username to get on the bus."
-      );
-    } else if (formData.password.length < 1) {
-      setPasswordError(
-        "Slow down. You need a password to roll on."
-      );
-    } else
-      try {
-        const response = await addUser({
-              username: formData.username,
-              password: formData.password,
-            })
-        const result = await response.json();
-        console.log(result);
-        setToken(result.token);
-
-      } catch (error) {
-        setError(error.message);
-      }
+      setNameError("Stop! You need a username to get on the bus.");
+      return;
+    }
+    if (formData.password.length < 1) {
+      setPasswordError("Slow down. You need a password to roll on.");
+      return;
+    }
+  
+    try {
+      const result = await addUser({
+        username: formData.username,
+        password: formData.password,
+      });
+  
+      console.log(result);
+      // setToken(result.token); // Ensure backend actually returns a token
+  
+    } catch (error) {
+      setError(error.message);
+    }
   }
+  
 
   return (
     <>

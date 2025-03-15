@@ -16,20 +16,67 @@ export async function getUsers() {
 
 export async function addUser(user) {
   try {
-    const response = await fetch(BASE_API + "/users", {
+    const response = await fetch(`${BASE_API}/users/register`, { // ✅ Ensure correct endpoint
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
+
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    const json = await response.json();
-    return json.data;
+
+    return response.json();
   } catch (err) {
     console.error("Error adding user:", err);
+    throw err;
   }
 }
+
+export async function loginUser(credentials) {
+  try {
+    const response = await fetch("http://localhost:3000/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem("token", data.token);
+
+    return data;
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
+}
+
+export async function getUserDetails(token) {
+  try {
+    const response = await fetch("http://localhost:3000/api/users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    return response.json();
+  } catch (err) {
+    console.error("Error fetching user details:", err);
+    throw err;
+  }
+}
+
 
 export async function deleteUser(userId) {
   try {
@@ -66,7 +113,7 @@ export async function getBuses() {
 
 export async function addBus(bus) {
   try {
-    const response = await fetch(`${BASE_API}/buses`, { // ✅ Ensure BASE_API is correct
+    const response = await fetch(`${BASE_API}/buses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
