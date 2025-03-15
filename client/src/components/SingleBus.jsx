@@ -6,7 +6,7 @@ export default function SingleBus({ bus }) {
     ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"] 
     : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];  
 
-    
+
   const [selectedRow, setSelectedRow] = useState("");
 
   function handleRowChange(event) {
@@ -26,7 +26,7 @@ export default function SingleBus({ bus }) {
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
       <h1>Bus {bus.number}</h1>
-      <h2>School: {bus.schoolId === 1 ? "Walden" : "Pine Ridge"}</h2>
+ 
 
       <label>
         Parking Row:
@@ -42,7 +42,7 @@ export default function SingleBus({ bus }) {
 
       <p>Selected Row: {selectedRow || "None"}</p>
 
-      <button className="button" onClick={handleDelete}>
+      <button className="delete-button" onClick={handleDelete}>
         Delete Bus
       </button>
     </div>

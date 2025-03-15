@@ -36,11 +36,12 @@ export default function PineRidgeBuses() {
 
   return (
     <div>
-      <h1>Pine Ridge Buses</h1>
-
-      <button onClick={() => navigate(-1)} className="go-back-btn">
+       <button className="back-button" onClick={() => navigate(-1)} >
         ⬅ Go Back
       </button>
+      
+      <h1 className="header">Pine Ridge Buses</h1>
+
 
       <input
         type="text"
@@ -49,7 +50,7 @@ export default function PineRidgeBuses() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-input"
       />
-
+<div className="bus-container">
       {filteredBuses.length > 0 ? (
         filteredBuses.map(bus => (
           <SingleBus key={bus.id} bus={bus} removeBus={removeBus} />
@@ -57,6 +58,7 @@ export default function PineRidgeBuses() {
       ) : (
         <p>No buses found</p>
       )}
+      </div>
     </div>
   );
 }

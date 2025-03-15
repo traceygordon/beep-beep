@@ -110,7 +110,7 @@ app.get("/api/buses/pine-ridge", async (req, res, next) => {
 app.get("/api/buses/walden", async (req, res, next) => {
   try {
     const SQL = `
-      SELECT * FROM buses
+      SELECT * FROM buses 
       WHERE schoolId = (SELECT id FROM schools WHERE name = 'Walden')
     `;
     const result = await client.query(SQL);
