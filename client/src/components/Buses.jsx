@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getBuses } from "../api/index.js";
 import SingleBus from "./SingleBus.jsx";
+import BusForm from "./BusForm.jsx";
 
 export default function Buses({token}) {
     const [buses, setBuses] = useState([]);
@@ -11,13 +12,13 @@ export default function Buses({token}) {
         console.log(busData)
       }
     
-      useEffect(() => {
-        allBuses(buses);
-      }, []);
+      // useEffect(() => {
+      //   allBuses(buses);
+      // }, []);
 
     return (
         <div className="article">
-        
+        <BusForm />
           <SingleBus
             // key={bus.id}
             // bus={bus.number}
@@ -25,7 +26,6 @@ export default function Buses({token}) {
             // busData={busData}
             token={token}
           />
-        
       </div>
   )
   };

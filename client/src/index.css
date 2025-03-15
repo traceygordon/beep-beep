@@ -31,6 +31,7 @@ body {
   margin: 0 0.5em 0.5em 0;
 }
 
+
 .buses {
   display: flex;
   flex-direction: column;
@@ -59,17 +60,11 @@ body {
   margin-right: 5em;
 }
 
+
+
 .article {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   gap: 1em;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: 1em;
-  margin-right: 50em;
 }
