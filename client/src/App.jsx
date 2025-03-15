@@ -6,6 +6,9 @@ import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Buses from "./components/Buses";
 import Header from "./components/Header";
+import WaldenBuses from "./components/WaldenBuses";
+import PineRidgeBuses from "./components/PineRidgeBuses";
+
 
 function App() {
    const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -24,7 +27,11 @@ function App() {
         <Route path="/account" element={<Account token={token} />}/>
 
         <Route path="/buses" element={<Buses token={token} />}/>
+
+        <Route path="/buses/pine-ridge" element={<PineRidgeBuses />} />
         
+        <Route path="/buses/walden" element={<WaldenBuses />} />
+      
     
       </Routes>
     </>

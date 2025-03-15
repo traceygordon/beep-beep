@@ -1,11 +1,11 @@
 {
   "name": "beep-beep",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start:dev": "nodemon index.js",
-    "start": "node index.js",
-    "seed": "index.js"
+    "start:dev": "nodemon server.js",
+    "start": "node server.js",
+    "seed": "server.js"
   },
   "keywords": [],
   "author": "",

@@ -32,7 +32,7 @@ body {
 }
 
 
-.buses {
+.bus-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,7 +43,7 @@ body {
   margin: 0.5em 0.5em 0.5em 0.5em;
 }
 
-.bus img {
+.bus-card img {
   display: flex;
   margin: auto;
   justify-content: center;

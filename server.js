@@ -56,7 +56,7 @@ app.get("/api/users/me", async (req, res, next) => {
     if (!token) return res.status(401).json({ error: "Unauthorized" });
 
     const SQL = "SELECT id, username FROM users WHERE id = $1";
-    const response = await client.query(SQL, [/* userId from token */]);
+    const response = await client.query(SQL, [`${id}`]);
 
     if (response.rows.length === 0) return res.status(404).json({ error: "User not found" });
 
@@ -94,6 +94,33 @@ app.get("/api/buses", async (req, res, next) => {
     next(ex);
   }
 });
+
+app.get("/api/buses/pine-ridge", async (req, res, next) => {
+  try {
+    const result = await client.query(
+      `SELECT * FROM buses WHERE schoolId = (SELECT id FROM schools WHERE name = 'Pine Ridge')`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+app.get("/api/buses/walden", async (req, res, next) => {
+  try {
+    const SQL = `
+      SELECT * FROM buses
+      WHERE schoolId = (SELECT id FROM schools WHERE name = 'Walden')
+    `;
+    const result = await client.query(SQL);
+    res.json(result.rows);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+
 
 //POSTS
 app.post("/api/users/register", async (req, res, next) => {
@@ -135,11 +162,12 @@ app.post("/api/users/login", async (req, res, next) => {
   }
 });
 
+
 app.post("/api/buses", async (req, res, next) => {
   try {  
-    const { number } = req.body;
-    const SQL = `INSERT INTO buses(number) VALUES($1) RETURNING *`;
-    const result = await client.query(SQL, [number]);
+    const { number, schoolId } = req.body;
+    const SQL = `INSERT INTO buses(number, schoolId) VALUES($1, $2) RETURNING *`;
+    const result = await client.query(SQL, [number, schoolId]);
 
     res.json(result.rows[0]);
   } catch (ex) {
@@ -222,36 +250,83 @@ const init = async () => {
   await client.connect();
 
   const SQL = `
-        DROP TABLE IF EXISTS users_buses;
-        DROP TABLE IF EXISTS buses;
-        DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users_buses;
+DROP TABLE IF EXISTS schools_buses;
+DROP TABLE IF EXISTS buses;
+DROP TABLE IF EXISTS schools;
 
-        CREATE TABLE users (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR(50) UNIQUE NOT NULL,
-          password VARCHAR(50) NOT NULL
-        );
-  
-        CREATE TABLE buses (
-          id SERIAL PRIMARY KEY,
-          number VARCHAR(50) NOT NULL
-        );
+CREATE TABLE schools (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE
+);
 
-        CREATE TABLE users_buses (
-        id SERIAL PRIMARY KEY,
-        busId INTEGER REFERENCES buses(id),
-        userId INTEGER REFERENCES users(id)
-      );
-    
-     INSERT INTO users(username, password) VALUES('Sylvia', 'pw');
-     INSERT INTO users(username, password) VALUES('Tracey', 'pw');
-     INSERT INTO users(username, password) VALUES('Matt', 'pw');
+CREATE TABLE buses (
+  id SERIAL PRIMARY KEY,
+  number VARCHAR(50) NOT NULL,
+  schoolId INTEGER REFERENCES schools(id)
+);
 
-     INSERT INTO buses(number) VALUES(407);
-     INSERT INTO buses(number) VALUES(300);
-     INSERT INTO buses(number) VALUES(19);
+CREATE TABLE schools_buses (
+  id SERIAL PRIMARY KEY,
+  schoolId INTEGER REFERENCES schools(id),
+  busId INTEGER REFERENCES buses(id)
+);
 
-    `;
+INSERT INTO schools (name) VALUES ('Walden'), ('Pine Ridge');
+
+INSERT INTO buses (number, schoolId) VALUES ('101', 1);
+INSERT INTO buses (number, schoolId) VALUES ('102', 1);
+INSERT INTO buses (number, schoolId) VALUES ('103', 1);
+INSERT INTO buses (number, schoolId) VALUES ('104', 1);
+INSERT INTO buses (number, schoolId) VALUES ('105', 1);
+INSERT INTO buses (number, schoolId) VALUES ('106', 1);
+INSERT INTO buses (number, schoolId) VALUES ('107', 1);
+INSERT INTO buses (number, schoolId) VALUES ('108', 1);
+INSERT INTO buses (number, schoolId) VALUES ('109', 1);
+INSERT INTO buses (number, schoolId) VALUES ('110', 1);
+INSERT INTO buses (number, schoolId) VALUES ('111', 1);
+INSERT INTO buses (number, schoolId) VALUES ('112', 1);
+INSERT INTO buses (number, schoolId) VALUES ('113', 1);
+INSERT INTO buses (number, schoolId) VALUES ('114', 1);
+INSERT INTO buses (number, schoolId) VALUES ('115', 1);
+INSERT INTO buses (number, schoolId) VALUES ('116', 1);
+INSERT INTO buses (number, schoolId) VALUES ('117', 1);
+INSERT INTO buses (number, schoolId) VALUES ('118', 1);
+INSERT INTO buses (number, schoolId) VALUES ('119', 1);
+INSERT INTO buses (number, schoolId) VALUES ('120', 1);
+INSERT INTO buses (number, schoolId) VALUES ('121', 1);
+INSERT INTO buses (number, schoolId) VALUES ('122', 1);
+INSERT INTO buses (number, schoolId) VALUES ('123', 1);
+INSERT INTO buses (number, schoolId) VALUES ('124', 1);
+INSERT INTO buses (number, schoolId) VALUES ('125', 1);
+
+INSERT INTO buses (number, schoolId) VALUES ('201', 2);
+INSERT INTO buses (number, schoolId) VALUES ('202', 2);
+INSERT INTO buses (number, schoolId) VALUES ('203', 2);
+INSERT INTO buses (number, schoolId) VALUES ('204', 2);
+INSERT INTO buses (number, schoolId) VALUES ('205', 2);
+INSERT INTO buses (number, schoolId) VALUES ('206', 2);
+INSERT INTO buses (number, schoolId) VALUES ('207', 2);
+INSERT INTO buses (number, schoolId) VALUES ('208', 2);
+INSERT INTO buses (number, schoolId) VALUES ('209', 2);
+INSERT INTO buses (number, schoolId) VALUES ('210', 2);
+INSERT INTO buses (number, schoolId) VALUES ('211', 2);
+INSERT INTO buses (number, schoolId) VALUES ('212', 2);
+INSERT INTO buses (number, schoolId) VALUES ('213', 2);
+INSERT INTO buses (number, schoolId) VALUES ('214', 2);
+INSERT INTO buses (number, schoolId) VALUES ('215', 2);
+INSERT INTO buses (number, schoolId) VALUES ('216', 2);
+INSERT INTO buses (number, schoolId) VALUES ('217', 2);
+INSERT INTO buses (number, schoolId) VALUES ('218', 2);
+INSERT INTO buses (number, schoolId) VALUES ('219', 2);
+INSERT INTO buses (number, schoolId) VALUES ('220', 2);
+INSERT INTO buses (number, schoolId) VALUES ('221', 2);
+INSERT INTO buses (number, schoolId) VALUES ('222', 2);
+INSERT INTO buses (number, schoolId) VALUES ('223', 2);
+INSERT INTO buses (number, schoolId) VALUES ('224', 2);
+INSERT INTO buses (number, schoolId) VALUES ('225', 2);
+
+`;
 
   await client.query(SQL);
 
