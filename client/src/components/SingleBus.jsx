@@ -1,30 +1,47 @@
+import { useState } from "react";
 import { deleteBus } from "../api";
 
-export default function SingleBus({ bus, removeBus }) {
+export default function SingleBus({ bus }) {
+  const parkingRows = bus.schoolId === 1 
+    ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"] 
+    : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];  
+
+    
+  const [selectedRow, setSelectedRow] = useState("");
+
+  function handleRowChange(event) {
+    setSelectedRow(event.target.value);
+  }
 
   async function handleDelete() {
     try {
-      const response = await deleteBus(bus.id); // ✅ Pass the correct bus ID
-      if (!response.ok) {
-        throw new Error("Failed to delete bus");
-      }
-
-      const result = await response.json();
-      console.log("Bus deleted:", result);
-
-      if (removeBus) {
-        removeBus(bus.id);
-      }
+      await deleteBus(bus.id);
+      console.log(`Deleted bus ${bus.number}`);
     } catch (err) {
-      console.error("Error deleting bus:", err);
+      console.error(err);
     }
   }
 
   return (
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
-      <h1>{bus.number}</h1>
-      <h2>{bus.schoolId}</h2>
+      <h1>Bus {bus.number}</h1>
+      <h2>School: {bus.schoolId === 1 ? "Walden" : "Pine Ridge"}</h2>
+
+      <label>
+        Parking Row:
+        <select value={selectedRow} onChange={handleRowChange}>
+          <option value="">Select a Row</option>
+          {parkingRows.map((row, index) => (
+            <option key={index} value={row}>
+              {row}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <p>Selected Row: {selectedRow || "None"}</p>
+
       <button className="button" onClick={handleDelete}>
         Delete Bus
       </button>

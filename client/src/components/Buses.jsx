@@ -1,16 +1,19 @@
-import PineRidgeBuses from "./PineRidgeBuses";
-import WaldenBuses from "./WaldenBuses";
 import { Link } from "react-router-dom";
 
 export default function Buses() {
   return (
-    <div className="school-cards">
-        <Link to={"./pine-ridge"}>
-          <h2>Pine Ridge</h2>
-        </Link>
-  
-        <Link to={"./walden"}>
-          <h2>Walden</h2>
-        </Link>
-    </div>)
+    <div className="school-container">
+      
+      <Link to={"./pine-ridge"} className="school-card pine-ridge">
+        <img src="/pine-ridge.jpg" alt="Pine Ridge" className="school-img"/>
+        <h2>Pine Ridge</h2>
+      </Link>
+
+      <Link to={"./walden"} className="school-card walden">
+        <img src="/walden.jpg" alt="Walden" className="school-img"/>
+        <h2>Walden</h2>
+      </Link>
+
+    </div>
+  );
 }

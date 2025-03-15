@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function PineRidgeBuses() {
   const [buses, setBuses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,10 @@ export default function PineRidgeBuses() {
     setBuses((prevBuses) => prevBuses.filter(bus => bus.id !== id));
   }
 
+  const filteredBuses = buses.filter(bus =>
+    bus.number.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <h1>Pine Ridge Buses</h1>
@@ -36,10 +41,22 @@ export default function PineRidgeBuses() {
       <button onClick={() => navigate(-1)} className="go-back-btn">
         ⬅ Go Back
       </button>
-      
-      {buses.map(bus => (
-        <SingleBus key={bus.id} bus={bus} removeBus={removeBus} />
-      ))}
+
+      <input
+        type="text"
+        placeholder="Search by bus number..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
+
+      {filteredBuses.length > 0 ? (
+        filteredBuses.map(bus => (
+          <SingleBus key={bus.id} bus={bus} removeBus={removeBus} />
+        ))
+      ) : (
+        <p>No buses found</p>
+      )}
     </div>
   );
 }
