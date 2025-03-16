@@ -20,7 +20,7 @@ function App() {
       <Navigation />
       <Routes>
 
-        <Route path="/login" element={<Login token={token} />} />
+        <Route path="/login" element={<Login setToken={setToken} token={token} />} />
 
         <Route path="/register" element={<Register setToken={setToken}/>} />
 

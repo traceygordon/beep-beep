@@ -4,6 +4,7 @@ const path = require("path");
 const pg = require("pg");
 const app = express();
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const client = new pg.Client(
   process.env.DATABASE_URL ||
@@ -45,24 +46,6 @@ app.get("/api/users", async (req, res, next) => {
     res.send(response.rows);
   } catch (ex) {
     next(ex);
-  }
-});
-
-app.get("/api/users/me", async (req, res, next) => {
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) return res.status(401).json({ error: "Unauthorized" });
-
-    const SQL = "SELECT id, username FROM users WHERE id = $1";
-    const response = await client.query(SQL, [`${id}`]);
-
-    if (response.rows.length === 0)
-      return res.status(404).json({ error: "User not found" });
-
-    res.json(response.rows[0]);
-  } catch (error) {
-    next(error);
   }
 });
 
@@ -122,12 +105,13 @@ app.get("/api/buses/walden", async (req, res, next) => {
 app.post("/api/users/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const SQL = `INSERT INTO users(username, password) 
-    VALUES($1, $2) 
-    RETURNING *`;
-    const result = await client.query(SQL, [username, password]);
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    res.send(result.rows[0]);
+    const SQL = `INSERT INTO users(username, password) VALUES($1, $2) RETURNING *`;
+    const result = await client.query(SQL, [username, hashedPassword]);
+
+    res.json(result.rows[0]);
   } catch (ex) {
     next(ex);
   }
@@ -141,16 +125,20 @@ app.post("/api/users/login", async (req, res, next) => {
     const result = await client.query(SQL, [username]);
     const user = result.rows[0];
 
-    if (!user || user.password !== password) {
-      return res.status(401).json({ error: "Invalid username or password" });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username or password username" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid username or password bcrypt" });
     }
 
     const token = jwt.sign(
       { id: user.id, username: user.username },
       SECRET_KEY,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
 
     res.json({ message: "Login successful", token, user });
@@ -238,10 +226,15 @@ const init = async () => {
   await client.connect();
 
   const SQL = `
-DROP TABLE IF EXISTS users_buses;
-DROP TABLE IF EXISTS schools_buses;
-DROP TABLE IF EXISTS buses;
-DROP TABLE IF EXISTS schools;
+DROP TABLE IF EXISTS buses CASCADE;
+DROP TABLE IF EXISTS schools CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
 
 CREATE TABLE schools (
   id SERIAL PRIMARY KEY,
@@ -251,14 +244,9 @@ CREATE TABLE schools (
 CREATE TABLE buses (
   id SERIAL PRIMARY KEY,
   number VARCHAR(50) NOT NULL,
-  schoolid INTEGER REFERENCES schools(id)
+  schoolid INTEGER REFERENCES schools(id) ON DELETE CASCADE
 );
 
-CREATE TABLE schools_buses (
-  id SERIAL PRIMARY KEY,
-  schoolid INTEGER REFERENCES schools(id),
-  busId INTEGER REFERENCES buses(id)
-);
 
 INSERT INTO schools (name) VALUES ('Walden'), ('Pine Ridge');
 

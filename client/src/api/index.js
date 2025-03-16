@@ -35,26 +35,19 @@ export async function addUser(user) {
 
 export async function loginUser(credentials) {
   try {
-    const response = await fetch("http://localhost:3000/api/users/login", {
+    const response = await fetch(`${BASE_API}/users/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
     const data = await response.json();
-
-    localStorage.setItem("token", data.token);
+    if (!response.ok) throw new Error(data.error || "Login failed");
 
     return data;
   } catch (error) {
-    console.error("Error logging in:", error);
-    throw error;
+    console.error("Login failed:", error);
+    return { error: error.message };
   }
 }
 
