@@ -2,10 +2,10 @@ import { useState } from "react";
 import { deleteBus } from "../api";
 
 export default function SingleBus({ bus }) {
-  const parkingRows = bus.schoolId === 1 
-    ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"] 
-    : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];  
-
+  const parkingRows =
+    bus.schoolid === 1
+      ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"]
+      : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];
 
   const [selectedRow, setSelectedRow] = useState("");
 
@@ -26,7 +26,6 @@ export default function SingleBus({ bus }) {
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
       <h1>Bus {bus.number}</h1>
- 
 
       <label>
         Parking Row:
