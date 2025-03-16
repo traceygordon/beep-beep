@@ -6,11 +6,11 @@ const app = express();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
 const client = new pg.Client(
   process.env.DATABASE_URL ||
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
 );
-const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
 
 app.use(express.json());
 app.use(cors());
@@ -132,7 +132,7 @@ app.post("/api/users/login", async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ error: "Invalid username or password bcrypt" });
+      return res.status(401).json({ error: "Invalid username or password" });
     }
 
     const token = jwt.sign(

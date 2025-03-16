@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { addUser } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function Register({ setToken }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -26,7 +28,8 @@ export default function Register({ setToken }) {
       });
   
       console.log(result);
-      // setToken(result.token); // Ensure backend actually returns a token
+      setToken(result.token);
+      navigate("/buses");
   
     } catch (error) {
       setError(error.message);
