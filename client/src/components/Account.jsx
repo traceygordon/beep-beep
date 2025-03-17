@@ -23,19 +23,28 @@ export default function Account({ token }) {
     }
   }, [token, navigate]);
 
-  function handleLogout() {
-    setToken(null);
-    localStorage.removeItem("token");
-    navigate("/login");
+  function usernameChange(){
+    const username = window.prompt("Enter your username","");
+    
+
   }
+
+  function passwordChange(){
+    const password = window.prompt("Enter your password","");
+  }
+
 
   if (!user) return <p>Loading account details...</p>;
 
   return (
     <div className="account-container">
       <h2>Welcome, {user.username}!</h2>
+      <img className="user-image" src="/frizz.jpg" alt="user-image" />
       <p><strong>Username:</strong> {user.username}</p>
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={usernameChange()}>change username</button>
+      <br />
+      <button onClick={passwordChange()}>change password</button>
+ 
     </div>
   );
 }

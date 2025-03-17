@@ -22,7 +22,7 @@ localStorage.removeItem("token")
         <h2>Account</h2>
       </Link>
 
-      <button onClick={handleClick}>Log Out</button> </>
+      <button className="logout-button" onClick={handleClick}>Log Out</button> </>
       ) : (
 <>
       <Link to={"/login"}>

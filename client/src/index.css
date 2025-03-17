@@ -1,5 +1,5 @@
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Brush Script MT', cursive;
   background-color: rgb(239, 223, 119);
 }
 
@@ -86,6 +86,24 @@ body {
   height: 10em;
   width: 10em;
   border: 0.06em solid black;
+}
+
+.user-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logout-button{
+  color: rgb(0, 0, 0);
+  padding: 10px 15px;
+  width: 30%;
+  border: solid black, .2px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-top: 9px;
+
 }
 
 .delete-button {
