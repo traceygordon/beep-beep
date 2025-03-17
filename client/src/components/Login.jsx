@@ -30,6 +30,7 @@ export default function Login({ setToken, token }) {
       console.log(result);
       if (result.token) {
         setToken(result.token);
+        localStorage.setItem("token", result.token);
         setError(null);
         navigate("/buses");
       } else {

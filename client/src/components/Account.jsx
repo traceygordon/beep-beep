@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getUserDetails } from "../api"; 
 import { useNavigate } from "react-router-dom";
 
-export default function Account({ token, setToken }) {
+export default function Account({ token }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
