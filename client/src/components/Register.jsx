@@ -29,7 +29,7 @@ export default function Register({ setToken }) {
   
       console.log(result);
       setToken(result.token);
-      navigate("/buses");
+      navigate("/");
   
     } catch (error) {
       setError(error.message);

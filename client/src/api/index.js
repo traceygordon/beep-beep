@@ -16,7 +16,7 @@ export async function getUsers() {
 
 export async function addUser(user) {
   try {
-    const response = await fetch(`${BASE_API}/users/register`, { // ✅ Ensure correct endpoint
+    const response = await fetch(`${BASE_API}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,6 +68,14 @@ export async function getUserDetails(token) {
     console.error("Error fetching user details:", err);
     throw err;
   }
+}
+
+async function updateUser(userId, updatedData) {
+  await fetch(`/api/users/${userId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedData),
+  });
 }
 
 
@@ -123,6 +131,13 @@ export async function addBus(bus) {
   }
 }
 
+async function updateBus(busId, updatedData) {
+  await fetch(`/api/buses/${busId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedData),
+  });
+}
 
 export async function deleteBus(busId) {
   try {

@@ -164,8 +164,10 @@ app.patch("/api/users/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { username, password } = req.body;
-    const SQL = `UPDATE users 
-    SET username=$1, password=$2
+    const SQL = `
+    UPDATE users 
+      SET username = COALESCE($1, username), 
+          password = COALESCE($2, password)
     WHERE id = $3
     RETURNING *`;
     const result = await client.query(SQL, [username, password, id]);
@@ -179,12 +181,14 @@ app.patch("/api/users/:id", async (req, res, next) => {
 app.patch("/api/buses/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { number } = req.body;
-    const SQL = `UPDATE buses 
-    SET number=$1
-    WHERE id = $2
-    RETURNING *`;
-    const result = await client.query(SQL, [number, id]);
+    const { number, row } = req.body;
+    const SQL = `
+       UPDATE buses 
+      SET number = COALESCE($1, number), 
+          row = COALESCE($2, row)
+      WHERE id = $3
+      RETURNING *`;
+    const result = await client.query(SQL, [number, row, id]);
 
     res.send(result.rows[0]);
   } catch (ex) {
@@ -244,6 +248,7 @@ CREATE TABLE schools (
 CREATE TABLE buses (
   id SERIAL PRIMARY KEY,
   number VARCHAR(50) NOT NULL,
+  row INTEGER,
   schoolid INTEGER REFERENCES schools(id) ON DELETE CASCADE
 );
 

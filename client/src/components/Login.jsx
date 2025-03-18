@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../api";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login({ setToken, token }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -34,15 +35,16 @@ export default function Login({ setToken, token }) {
         setError(null);
         navigate("/buses");
       } else {
-        setError("Back up and try again.");
+        setError("Back up. The username or password is not recognized.");
       }
     } catch (error) {
-      setError("Back up and try again.");
+      setError("Back up. The username or password is not recognized.");
     }
   }
 
   return (
     <>
+    <div>
       <h2>Login</h2>
       {error && <p>{error}</p>}
 
@@ -73,6 +75,12 @@ export default function Login({ setToken, token }) {
         </label>
         <button type="submit">Submit</button>
       </form>
+      </div>
+      <div>
+      <Link to={"/register"}>
+        <p>or register</p>
+      </Link>
+      </div>
     </>
   );
 }
