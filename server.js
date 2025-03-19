@@ -77,10 +77,25 @@ app.get("/api/buses", async (req, res, next) => {
   }
 });
 
-app.get("/api/buses/pine-ridge", async (req, res, next) => {
+app.get("/api/buses/:id", async (req, res, next) => {
+  const {id} = req.params;
+  try {
+    const SQL = `
+          SELECT * FROM buses WHERE id=$1;
+        `;
+    const response = await client.query(SQL, [id]);
+
+    console.log(response);
+    res.send(response.rows[0]);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.get("/api/schools/pine-ridge", async (req, res, next) => {
   try {
     const result = await client.query(
-      `SELECT * FROM buses WHERE schoolid = (SELECT id FROM schools WHERE name = 'Pine Ridge')`
+      `SELECT * FROM buses WHERE schoolid = (SELECT id FROM schools WHERE name = 'Pine Ridge');`
     );
     res.json(result.rows);
   } catch (err) {
@@ -88,11 +103,11 @@ app.get("/api/buses/pine-ridge", async (req, res, next) => {
   }
 });
 
-app.get("/api/buses/walden", async (req, res, next) => {
+app.get("/api/schools/walden", async (req, res, next) => {
   try {
     const SQL = `
       SELECT * FROM buses 
-      WHERE schoolid = (SELECT id FROM schools WHERE name = 'Walden')
+      WHERE schoolid = (SELECT id FROM schools WHERE name = 'Walden');
     `;
     const result = await client.query(SQL);
     res.json(result.rows);
@@ -255,57 +270,59 @@ CREATE TABLE buses (
 
 INSERT INTO schools (name) VALUES ('Walden'), ('Pine Ridge');
 
-INSERT INTO buses (number, schoolid) VALUES ('101', 1);
-INSERT INTO buses (number, schoolid) VALUES ('102', 1);
-INSERT INTO buses (number, schoolid) VALUES ('103', 1);
-INSERT INTO buses (number, schoolid) VALUES ('104', 1);
-INSERT INTO buses (number, schoolid) VALUES ('105', 1);
-INSERT INTO buses (number, schoolid) VALUES ('106', 1);
-INSERT INTO buses (number, schoolid) VALUES ('107', 1);
-INSERT INTO buses (number, schoolid) VALUES ('108', 1);
-INSERT INTO buses (number, schoolid) VALUES ('109', 1);
-INSERT INTO buses (number, schoolid) VALUES ('110', 1);
-INSERT INTO buses (number, schoolid) VALUES ('111', 1);
-INSERT INTO buses (number, schoolid) VALUES ('112', 1);
-INSERT INTO buses (number, schoolid) VALUES ('113', 1);
-INSERT INTO buses (number, schoolid) VALUES ('114', 1);
-INSERT INTO buses (number, schoolid) VALUES ('115', 1);
-INSERT INTO buses (number, schoolid) VALUES ('116', 1);
-INSERT INTO buses (number, schoolid) VALUES ('117', 1);
-INSERT INTO buses (number, schoolid) VALUES ('118', 1);
-INSERT INTO buses (number, schoolid) VALUES ('119', 1);
-INSERT INTO buses (number, schoolid) VALUES ('120', 1);
-INSERT INTO buses (number, schoolid) VALUES ('121', 1);
-INSERT INTO buses (number, schoolid) VALUES ('122', 1);
-INSERT INTO buses (number, schoolid) VALUES ('123', 1);
-INSERT INTO buses (number, schoolid) VALUES ('124', 1);
-INSERT INTO buses (number, schoolid) VALUES ('125', 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('101', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('102', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('103', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('104', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('105', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('106', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('107', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('108', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('109', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('110', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('111', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('112', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('113', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('114', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('115', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('116', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('117', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('118', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('119', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('120', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('121', 1, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('122', 3, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('123', 4, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('124', 2, 1);
+INSERT INTO buses (number, row, schoolid) VALUES ('125', 1, 1);
 
-INSERT INTO buses (number, schoolid) VALUES ('201', 2);
-INSERT INTO buses (number, schoolid) VALUES ('202', 2);
-INSERT INTO buses (number, schoolid) VALUES ('203', 2);
-INSERT INTO buses (number, schoolid) VALUES ('204', 2);
-INSERT INTO buses (number, schoolid) VALUES ('205', 2);
-INSERT INTO buses (number, schoolid) VALUES ('206', 2);
-INSERT INTO buses (number, schoolid) VALUES ('207', 2);
-INSERT INTO buses (number, schoolid) VALUES ('208', 2);
-INSERT INTO buses (number, schoolid) VALUES ('209', 2);
-INSERT INTO buses (number, schoolid) VALUES ('210', 2);
-INSERT INTO buses (number, schoolid) VALUES ('211', 2);
-INSERT INTO buses (number, schoolid) VALUES ('212', 2);
-INSERT INTO buses (number, schoolid) VALUES ('213', 2);
-INSERT INTO buses (number, schoolid) VALUES ('214', 2);
-INSERT INTO buses (number, schoolid) VALUES ('215', 2);
-INSERT INTO buses (number, schoolid) VALUES ('216', 2);
-INSERT INTO buses (number, schoolid) VALUES ('217', 2);
-INSERT INTO buses (number, schoolid) VALUES ('218', 2);
-INSERT INTO buses (number, schoolid) VALUES ('219', 2);
-INSERT INTO buses (number, schoolid) VALUES ('220', 2);
-INSERT INTO buses (number, schoolid) VALUES ('221', 2);
-INSERT INTO buses (number, schoolid) VALUES ('222', 2);
-INSERT INTO buses (number, schoolid) VALUES ('223', 2);
-INSERT INTO buses (number, schoolid) VALUES ('224', 2);
-INSERT INTO buses (number, schoolid) VALUES ('225', 2);
+
+INSERT INTO buses (number, row, schoolid) VALUES ('201', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('202', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('203', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('204', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('205', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('206', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('207', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('208', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('209', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('210', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('211', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('212', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('213', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('214', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('215', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('216', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('217', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('218', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('219', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('220', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('221', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('222', 2, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('223', 1, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('224', 3, 2);
+INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
+
 
 `;
 

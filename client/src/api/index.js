@@ -70,14 +70,6 @@ export async function getUserDetails(token) {
   }
 }
 
-async function updateUser(userId, updatedData) {
-  await fetch(`/api/users/${userId}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedData),
-  });
-}
-
 
 export async function deleteUser(userId) {
   try {
@@ -131,13 +123,6 @@ export async function addBus(bus) {
   }
 }
 
-async function updateBus(busId, updatedData) {
-  await fetch(`/api/buses/${busId}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(updatedData),
-  });
-}
 
 export async function deleteBus(busId) {
   try {

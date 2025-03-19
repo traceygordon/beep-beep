@@ -1,37 +1,16 @@
-import { useState, useEffect } from "react";
-import { updateBus, deleteBus } from "../api"; // Import updateBus
+import { useState } from "react";
+import { deleteBus } from "../api";
 
 export default function SingleBus({ bus }) {
   const parkingRows = bus.schoolid === 1 
     ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"] 
     : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];  
 
+
   const [selectedRow, setSelectedRow] = useState("");
 
-  // Fetch initial row when the component loads
-  useEffect(() => {
-    async function fetchRow() {
-      try {
-        const response = await fetch(`/api/buses/${bus.id}`);
-        const data = await response.json();
-        setSelectedRow(data.row || ""); // Set existing row if available
-      } catch (err) {
-        console.error("Error fetching bus row:", err);
-      }
-    }
-    fetchRow();
-  }, [bus.id]);
-
-  async function handleRowChange(event) {
-    const newRow = event.target.value;
-    setSelectedRow(newRow);
-
-    try {
-      await updateBus(bus.id, { row: newRow }); // Update row in DB
-      console.log(`Updated bus ${bus.number} with row: ${newRow}`);
-    } catch (err) {
-      console.error("Failed to update row:", err);
-    }
+  function handleRowChange(event) {
+    setSelectedRow(event.target.value);
   }
 
   async function handleDelete() {
@@ -47,6 +26,7 @@ export default function SingleBus({ bus }) {
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
       <h1>Bus {bus.number}</h1>
+ 
 
       <label>
         Parking Row:
