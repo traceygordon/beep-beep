@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Navigation({ setToken, token }) {
+const navigate = useNavigate()
 
 function handleClick(){
 setToken("");
-localStorage.removeItem("token")
+localStorage.removeItem("token");
+navigate("/");
 
 }
 

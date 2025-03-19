@@ -55,6 +55,7 @@ export default function Register({ setToken }) {
           />
           {nameError && <p>{nameError}</p>}
         </label>
+        <br />
         <label>
           Password:
           <input
@@ -67,6 +68,7 @@ export default function Register({ setToken }) {
           />
           {passwordError && <p>{passwordError}</p>}
         </label>
+        <br />
         <button type="submit">Submit</button>
       </form>
     </>

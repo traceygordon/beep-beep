@@ -1,50 +1,101 @@
 import { useEffect, useState } from "react";
-import { getUserDetails } from "../api"; 
-import { useNavigate } from "react-router-dom";
+import { deleteUser } from "../api";
 
 export default function Account({ token }) {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    async function fetchUser() {
+
+useEffect(() => {
+ async function getUserDetails(token) {
       try {
-        const userData = await getUserDetails(token);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user details:", error);
+        const response = await fetch("http://localhost:3000/api/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+      const userData = await response.json();
+      setUser(userData);
+      setUsername(userData.username);
+      setPassword("")
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  }
+  getUserDetails(token);
+}, [token]);
+
+  function handleUsernameChange(event) {
+    setUsername(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+
+  async function handleUpdate() {
+      console.log("Updating user with ID:", user.id);
+  
+      try {
+        const response = await fetch(`http://localhost:3000/api/users/${user.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            username: username, 
+            password: password }),
+        });
+    
+        console.log(`Updated user ${username} with pw ${password}`);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  
+    async function handleDelete() {
+      try {
+        await deleteUser(user.id);
+      } catch (err) {
+        console.error(err);
       }
     }
 
-    if (token) {
-      fetchUser();
-    } else {
-      navigate("/login");
-    }
-  }, [token, navigate]);
 
-  function usernameChange(){
-    const username = window.prompt("Enter your username","");
-    
-
-  }
-
-  function passwordChange(){
-    const password = window.prompt("Enter your password","");
-  }
-
-
-  if (!user) return <p>Loading account details...</p>;
 
   return (
     <div className="account-container">
-      <h2>Welcome, {user.username}!</h2>
-      <img className="user-image" src="/frizz.jpg" alt="user-image" />
-      <p><strong>Username:</strong> {user.username}</p>
-      <button onClick={usernameChange()}>change username</button>
-      <br />
-      <button onClick={passwordChange()}>change password</button>
- 
+      <img className="img" src="/frizz.jpg" alt="Ms. Frizzle" />
+      <h3>Username: {username}</h3>
+      <label>
+        Update username:
+        <input 
+          type="text" 
+          value={username} 
+          onChange={handleUsernameChange} 
+        />
+      </label>
+<br />
+      <label>
+        Update password:
+        <input 
+          type="password" 
+          value={password} 
+          onChange={handlePasswordChange} 
+        />
+      </label>
+<br />
+      <button className="update-button" onClick={handleUpdate}>
+        Update account
+      </button>
+<br />
+      <button className="delete-button" onClick={handleDelete}>
+        Delete account
+      </button>
     </div>
   );
 }

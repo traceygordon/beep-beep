@@ -42,31 +42,13 @@ export async function loginUser(credentials) {
     });
 
     const data = await response.json();
+    console.log(data)
     if (!response.ok) throw new Error(data.error || "Login failed");
 
     return data;
   } catch (error) {
     console.error("Login failed:", error);
     return { error: error.message };
-  }
-}
-
-export async function getUserDetails(token) {
-  try {
-    const response = await fetch("http://localhost:3000/api/users/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-    return response.json();
-  } catch (err) {
-    console.error("Error fetching user details:", err);
-    throw err;
   }
 }
 

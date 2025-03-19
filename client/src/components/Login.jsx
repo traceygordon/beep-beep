@@ -3,7 +3,7 @@ import { loginUser } from "../api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function Login({ setToken, token }) {
+export default function Login({ setToken }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const [nameError, setNameError] = useState("");
@@ -23,11 +23,7 @@ export default function Login({ setToken, token }) {
     }
 
     try {
-      const result = await loginUser({
-        username: formData.username,
-        password: formData.password,
-      });
-
+      const result = await loginUser(formData);
       console.log(result);
       if (result.token) {
         setToken(result.token);
@@ -61,6 +57,7 @@ export default function Login({ setToken, token }) {
           />
           {nameError && <p>{nameError}</p>}
         </label>
+        <br />
         <label>
           Password:
           <input
@@ -73,6 +70,7 @@ export default function Login({ setToken, token }) {
           />
           {passwordError && <p>{passwordError}</p>}
         </label>
+        <br />
         <button type="submit">Submit</button>
       </form>
       </div>

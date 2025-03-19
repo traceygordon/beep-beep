@@ -135,6 +135,8 @@ app.post("/api/users/register", async (req, res, next) => {
 app.post("/api/users/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    console.log(req.body.username)
+    console.log(req.body.password)
 
     const SQL = "SELECT * FROM users WHERE username = $1";
     const result = await client.query(SQL, [username]);
