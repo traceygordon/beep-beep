@@ -3,27 +3,37 @@ import { deleteBus } from "../api";
 
 export default function SingleBus({ bus }) {
   const parkingRows = bus.schoolid === 1 
-    ? ["Walden 1", "Walden 2", "Walden 3", "Walden 4"] 
-    : ["Pine Ridge 1", "Pine Ridge 2", "Pine Ridge 3"];  
+    ? [1, 2, 3, 4] 
+    : [1, 2, 3];  
 
-
-  const [selectedRow, setSelectedRow] = useState("");
+  const [selectedRow, setSelectedRow] = useState(bus.row);
+  const [busNumber, setBusNumber] = useState(bus.number);
 
   function handleRowChange(event) {
     setSelectedRow(event.target.value);
   }
 
+  function handleNumberChange(event) {
+    setBusNumber(event.target.value);
+  }
+
   async function handleUpdate() {
+    console.log("Updating bus with ID:", bus.id);
+
     try {
-          const response = await fetch(`http://localhost:3000/api/buses/${bus.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(response),
-          });
-      console.log(`Updated bus ${bus.number} to ${bus.row}`);
-      
+      const response = await fetch(`http://localhost:3000/api/buses/${bus.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          row: selectedRow, 
+          number: busNumber }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update bus");
+
+      console.log(`Updated bus ${busNumber} to row ${selectedRow}`);
     } catch (err) {
       console.error(err);
     }
@@ -32,8 +42,7 @@ export default function SingleBus({ bus }) {
   async function handleDelete() {
     try {
       await deleteBus(bus.id);
-      console.log(`Deleted bus ${bus.number}`);
-      
+      console.log(`Deleted bus ${busNumber}`);
     } catch (err) {
       console.error(err);
     }
@@ -42,14 +51,20 @@ export default function SingleBus({ bus }) {
   return (
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
-      <h1>Bus {bus.number}</h1>
-      <h1>Row {bus.row}</h1>
- 
+      <h3>Number: {busNumber}</h3>
+      <h3>Row: {selectedRow}</h3>
+      <label>
+        Update Number:
+        <input 
+          type="text" 
+          value={busNumber} 
+          onChange={handleNumberChange} 
+        />
+      </label>
 
       <label>
-        Parking Row:
+        Update Parking Row:
         <select value={selectedRow} onChange={handleRowChange}>
-          <option value="">Select a new row</option>
           {parkingRows.map((row, index) => (
             <option key={index} value={row}>
               {row}
@@ -59,7 +74,7 @@ export default function SingleBus({ bus }) {
       </label>
 
       <button className="update-button" onClick={handleUpdate}>
-        Update Row
+        Update Bus
       </button>
 
       <button className="delete-button" onClick={handleDelete}>
