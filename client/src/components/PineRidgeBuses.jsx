@@ -10,7 +10,7 @@ export default function PineRidgeBuses() {
   useEffect(() => {
     async function fetchBuses() {
       try {
-        const response = await fetch("http://localhost:3000/api/buses/pine-ridge");
+        const response = await fetch("http://localhost:3000/api/schools/pine-ridge");
   
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

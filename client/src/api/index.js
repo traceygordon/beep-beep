@@ -16,7 +16,7 @@ export async function getUsers() {
 
 export async function addUser(user) {
   try {
-    const response = await fetch(`${BASE_API}/users/register`, {
+    const response = await fetch(`${BASE_API}/users/register`, { 
       method: "POST",
       headers: {
         "Content-Type": "application/json",

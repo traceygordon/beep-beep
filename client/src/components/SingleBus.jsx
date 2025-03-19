@@ -13,10 +13,27 @@ export default function SingleBus({ bus }) {
     setSelectedRow(event.target.value);
   }
 
+  async function handleUpdate() {
+    try {
+          const response = await fetch(`http://localhost:3000/api/buses/${bus.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(response),
+          });
+      console.log(`Updated bus ${bus.number} to ${bus.row}`);
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function handleDelete() {
     try {
       await deleteBus(bus.id);
       console.log(`Deleted bus ${bus.number}`);
+      
     } catch (err) {
       console.error(err);
     }
@@ -26,12 +43,13 @@ export default function SingleBus({ bus }) {
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
       <h1>Bus {bus.number}</h1>
+      <h1>Row {bus.row}</h1>
  
 
       <label>
         Parking Row:
         <select value={selectedRow} onChange={handleRowChange}>
-          <option value="">Select a Row</option>
+          <option value="">Select a new row</option>
           {parkingRows.map((row, index) => (
             <option key={index} value={row}>
               {row}
@@ -40,7 +58,9 @@ export default function SingleBus({ bus }) {
         </select>
       </label>
 
-      <p>Selected Row: {selectedRow || "None"}</p>
+      <button className="update-button" onClick={handleUpdate}>
+        Update Row
+      </button>
 
       <button className="delete-button" onClick={handleDelete}>
         Delete Bus

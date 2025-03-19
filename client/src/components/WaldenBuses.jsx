@@ -10,7 +10,7 @@ export default function WaldenBuses() {
   useEffect(() => {
     async function fetchBuses() {
       try {
-        const response = await fetch("http://localhost:3000/api/buses/walden");
+        const response = await fetch("http://localhost:3000/api/schools/walden");
   
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
