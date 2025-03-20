@@ -40,7 +40,7 @@ export default function WaldenBuses() {
         ⬅ Go Back
       </button>
       
-      <h1 className="header">Walden Buses</h1>
+      <h2 className="header">Walden Buses</h2>
 
       <input
         type="text"

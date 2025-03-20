@@ -68,10 +68,10 @@ useEffect(() => {
 
 
   return (
-    <div className="account-container">
-      <img className="img" src="/frizz.jpg" alt="Ms. Frizzle" />
+    <div className="info-container">
+      <img className="user-img" src="/frizz.jpg" alt="Ms. Frizzle" />
       <h3>Username: {username}</h3>
-      <label>
+      <label className="username">
         Update username:
         <input 
           type="text" 
@@ -80,7 +80,7 @@ useEffect(() => {
         />
       </label>
 <br />
-      <label>
+      <label className="password">
         Update password:
         <input 
           type="password" 

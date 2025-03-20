@@ -15,7 +15,9 @@ navigate("/");
 
   return (
     <>
+
     <div className="navbar">
+    <img className="main-img" src="/msb.webp" alt="Bus" />
        {token ? (<>
       <Link to={"/buses"}>
         <h2>Buses</h2>

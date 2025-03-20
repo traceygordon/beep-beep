@@ -5,7 +5,6 @@ import Login from "./components/Login";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Buses from "./components/Buses";
-import Header from "./components/Header";
 import WaldenBuses from "./components/WaldenBuses";
 import PineRidgeBuses from "./components/PineRidgeBuses";
 
@@ -16,7 +15,7 @@ function App() {
 
   return (
     <>
-      <Header />
+    
       <Navigation setToken={setToken} token={token}/>
       <Routes>
 

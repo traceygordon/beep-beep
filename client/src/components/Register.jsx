@@ -38,12 +38,12 @@ export default function Register({ setToken }) {
   
 
   return (
-    <>
+    <div className="info-container">
       <h2>Register</h2>
       {error && <p>{error}</p>}
 
       <form onSubmit={handleSubmit} className="form">
-        <label>
+        <label className="username">
           Username:
           <input
             type="text"
@@ -56,7 +56,7 @@ export default function Register({ setToken }) {
           {nameError && <p>{nameError}</p>}
         </label>
         <br />
-        <label>
+        <label className="password">
           Password:
           <input
             type="password"
@@ -69,8 +69,8 @@ export default function Register({ setToken }) {
           {passwordError && <p>{passwordError}</p>}
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button className="submit-button" type="submit">Submit</button>
       </form>
-    </>
+    </div>
   );
 }

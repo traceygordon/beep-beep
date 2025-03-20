@@ -40,7 +40,7 @@ export default function PineRidgeBuses() {
         ⬅ Go Back
       </button>
       
-      <h1 className="header">Pine Ridge Buses</h1>
+      <h2 className="header">Pine Ridge Buses</h2>
 
 
       <input

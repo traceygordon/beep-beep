@@ -51,9 +51,8 @@ export default function SingleBus({ bus }) {
   return (
     <div className="bus-card">
       <img className="img" src="/lilbus.webp" alt="Bus" />
-      <h3>Number: {busNumber}</h3>
-      <h3>Row: {selectedRow}</h3>
-      <label>
+      <h3>Number: {busNumber} Row: {selectedRow}</h3>
+      <label className="bus-num">
         Update Number:
         <input 
           type="text" 
@@ -62,7 +61,7 @@ export default function SingleBus({ bus }) {
         />
       </label>
 
-      <label>
+      <label className="bus-row">
         Update Parking Row:
         <select value={selectedRow} onChange={handleRowChange}>
           {parkingRows.map((row, index) => (
