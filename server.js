@@ -42,7 +42,6 @@ app.get("/api/users", async (req, res, next) => {
           SELECT * FROM users;
         `;
     const response = await client.query(SQL);
-    console.log(response);
     res.send(response.rows);
   } catch (ex) {
     next(ex);
@@ -70,7 +69,6 @@ app.get("/api/buses", async (req, res, next) => {
           SELECT * FROM buses;
         `;
     const response = await client.query(SQL);
-    console.log(response);
     res.send(response.rows);
   } catch (ex) {
     next(ex);
@@ -84,8 +82,6 @@ app.get("/api/buses/:id", async (req, res, next) => {
           SELECT * FROM buses WHERE id=$1;
         `;
     const response = await client.query(SQL, [id]);
-
-    console.log(response);
     res.send(response.rows[0]);
   } catch (ex) {
     next(ex);
@@ -135,9 +131,6 @@ app.post("/api/users/register", async (req, res, next) => {
 app.post("/api/users/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(req.body.username)
-    console.log(req.body.password)
-
     const SQL = "SELECT * FROM users WHERE username = $1";
     const result = await client.query(SQL, [username]);
     const user = result.rows[0];
@@ -180,14 +173,13 @@ app.post("/api/buses", async (req, res, next) => {
 app.patch("/api/users/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { username, password } = req.body;
+    const { username } = req.body;
     const SQL = `
     UPDATE users 
-      SET username = COALESCE($1, username), 
-          password = COALESCE($2, password)
-    WHERE id = $3
+      SET username = COALESCE($1, username)
+    WHERE id = $2
     RETURNING *`;
-    const result = await client.query(SQL, [username, password, id]);
+    const result = await client.query(SQL, [username, id]);
 
     res.send(result.rows[0]);
   } catch (ex) {
@@ -324,8 +316,6 @@ INSERT INTO buses (number, row, schoolid) VALUES ('222', 2, 2);
 INSERT INTO buses (number, row, schoolid) VALUES ('223', 1, 2);
 INSERT INTO buses (number, row, schoolid) VALUES ('224', 3, 2);
 INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
-
-
 `;
 
   await client.query(SQL);
@@ -335,5 +325,15 @@ INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
   app.listen(port, () => console.log(`listening on port ${port}`));
 };
 
-// init function invocation
-init();
+
+async function startServer() {
+  await client.connect();
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`listening on port ${port}`));
+}
+
+startServer();
+
+module.exports={
+init:init
+}
