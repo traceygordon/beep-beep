@@ -10,7 +10,7 @@ export default function Buses() {
       </Link>
 
       <Link to={"./walden"} className="school-card walden">
-        <img src="/walden.jpg" alt="Walden" className="school-img"/>
+        <img src="/walden.webp" alt="Walden" className="school-img"/>
         <h2>Walden</h2>
       </Link>
 

@@ -60,6 +60,7 @@ export default function Login({ setToken }) {
         <br />
         <label className="password">
           Password:
+          <br />
           <input
             type="password"
             value={formData.password}

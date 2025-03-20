@@ -50,7 +50,7 @@ export default function SingleBus({ bus }) {
 
   return (
     <div className="bus-card">
-      <img className="img" src="/lilbus.webp" alt="Bus" />
+      {/* <img className="img" src="/lilbus.webp" alt="Bus" /> */}
       <h3>Number: {busNumber} Row: {selectedRow}</h3>
       <label className="bus-num">
         Update Number:
