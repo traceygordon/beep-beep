@@ -58,7 +58,6 @@ export default function Register({ setToken }) {
         <br />
         <label className="password">
           Password:
-          <br />
           <input
             type="password"
             value={formData.password}

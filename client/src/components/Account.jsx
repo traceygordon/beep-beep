@@ -68,34 +68,29 @@ useEffect(() => {
 
 
   return (
-    <div className="info-container">
-      <img className="user-img" src="/frizz.jpg" alt="Ms. Frizzle" />
-      <h3>Username: {username}</h3>
-      <label className="username">
-        Update username:
-        <input 
-          type="text" 
-          value={username} 
-          onChange={handleUsernameChange} 
-        />
-      </label>
-<br />
-      <label className="password">
-        Update password:
-        <input 
-          type="password" 
-          value={password} 
-          onChange={handlePasswordChange} 
-        />
-      </label>
-<br />
-      <button className="update-button" onClick={handleUpdate}>
-        Update account
-      </button>
-<br />
-      <button className="delete-button" onClick={handleDelete}>
-        Delete account
-      </button>
-    </div>
-  );
+      <div className="info-container">
+        <div className="profile">
+          <img className="user-img" src="/frizz.jpg" alt="Ms. Frizzle" />
+        </div>
+        <div className="user-info">
+          <h3>Username: {username}</h3>
+          <label className="username">
+            Update username:
+            <input 
+              type="text" 
+              size="12"
+              value={username} 
+              onChange={handleUsernameChange} 
+            />
+          </label>
+          <br />
+          <button className="update-button" onClick={handleUpdate}>
+            Update account
+          </button>
+          <br />
+          <button className="delete-button" onClick={handleDelete}>
+            Delete account
+          </button>
+        </div>
+      </div>);
 }
