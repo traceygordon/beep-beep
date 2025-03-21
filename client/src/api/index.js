@@ -42,7 +42,6 @@ export async function loginUser(credentials) {
     });
 
     const data = await response.json();
-    console.log(data)
     if (!response.ok) throw new Error(data.error || "Login failed");
 
     return data;
@@ -76,8 +75,6 @@ export async function getBuses() {
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const buses = await response.json(); 
-    console.log("Fetched buses:", buses);
-
     return buses;
   } catch (err) {
     console.error("Error fetching buses:", err);

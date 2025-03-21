@@ -33,13 +33,8 @@ useEffect(() => {
     setUsername(event.target.value);
   }
 
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
 
-  async function handleUpdate() {
-      console.log("Updating user with ID:", user.id);
-  
+  async function handleUpdate() {  
       try {
         const response = await fetch(`http://localhost:3000/api/users/${user.id}`, {
           method: "PATCH",
@@ -50,9 +45,7 @@ useEffect(() => {
             username: username, 
             password: password }),
         });
-    
-        console.log(`Updated user ${username} with pw ${password}`);
-      } catch (err) {
+          } catch (err) {
         console.error(err);
       }
     }
@@ -73,12 +66,13 @@ useEffect(() => {
           <img className="user-img" src="/frizz.jpg" alt="Ms. Frizzle" />
         </div>
         <div className="user-info">
-          <h3>Username: {username}</h3>
+          <p><strong>Username:</strong> {username}</p>
           <label className="username">
             Update username:
+            <br />
             <input 
               type="text" 
-              size="12"
+              size="15"
               value={username} 
               onChange={handleUsernameChange} 
             />

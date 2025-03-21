@@ -18,8 +18,6 @@ export default function SingleBus({ bus }) {
   }
 
   async function handleUpdate() {
-    console.log("Updating bus with ID:", bus.id);
-
     try {
       const response = await fetch(`http://localhost:3000/api/buses/${bus.id}`, {
         method: "PATCH",
@@ -32,8 +30,6 @@ export default function SingleBus({ bus }) {
       });
 
       if (!response.ok) throw new Error("Failed to update bus");
-
-      console.log(`Updated bus ${busNumber} to row ${selectedRow}`);
     } catch (err) {
       console.error(err);
     }
@@ -42,7 +38,6 @@ export default function SingleBus({ bus }) {
   async function handleDelete() {
     try {
       await deleteBus(bus.id);
-      console.log(`Deleted bus ${busNumber}`);
     } catch (err) {
       console.error(err);
     }

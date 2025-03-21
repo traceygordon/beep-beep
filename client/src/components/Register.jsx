@@ -26,9 +26,7 @@ export default function Register({ setToken }) {
         username: formData.username,
         password: formData.password,
       });
-  
-      console.log(result);
-      setToken(result.token);
+        setToken(result.token);
       navigate("/");
   
     } catch (error) {
@@ -60,6 +58,7 @@ export default function Register({ setToken }) {
           Password:
           <input
             type="password"
+            size="21"
             value={formData.password}
             onChange={(e) => {
               setPasswordError("");

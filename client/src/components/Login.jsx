@@ -24,7 +24,6 @@ export default function Login({ setToken }) {
 
     try {
       const result = await loginUser(formData);
-      console.log(result);
       if (result.token) {
         setToken(result.token);
         localStorage.setItem("token", result.token);
@@ -62,6 +61,7 @@ export default function Login({ setToken }) {
           Password:
           <input
             type="password"
+            size="21"
             value={formData.password}
             onChange={(e) => {
               setPasswordError("");
