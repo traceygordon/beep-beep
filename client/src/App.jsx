@@ -23,7 +23,7 @@ function App() {
 
         <Route path="/register" element={<Register setToken={setToken}/>} />
 
-        <Route path="/account" element={<Account token={token} />}/>
+        <Route path="/account" element={<Account setToken={setToken} token={token} />}/>
 
         <Route path="/buses" element={<Buses token={token} />}/>
 

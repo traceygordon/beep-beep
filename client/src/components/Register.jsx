@@ -68,7 +68,7 @@ export default function Register({ setToken }) {
           {passwordError && <p>{passwordError}</p>}
         </label>
         <br />
-        <button className="submit-button" type="submit">Submit</button>
+        <button className="submit-button" type="submit">Go to Login</button>
       </form>
     </div>
   );

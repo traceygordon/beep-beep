@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { deleteUser } from "../api";
+import { useNavigate } from "react-router-dom";
 
-export default function Account({ token }) {
+export default function Account({ setToken, token }) {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
 
 useEffect(() => {
@@ -53,6 +55,9 @@ useEffect(() => {
     async function handleDelete() {
       try {
         await deleteUser(user.id);
+        setToken("");
+localStorage.removeItem("token");
+      navigate("/");
       } catch (err) {
         console.error(err);
       }
