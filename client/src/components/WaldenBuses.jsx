@@ -12,27 +12,29 @@ export default function WaldenBuses() {
   useEffect(() => {
     async function fetchBuses() {
       try {
-        const response = await fetch("http://localhost:3000/api/schools/walden");
-  
+        const response = await fetch(
+          "http://localhost:3000/api/schools/walden"
+        );
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+
         const data = await response.json();
         setBuses(data);
       } catch (error) {
         console.error("Error fetching Walden buses:", error);
       }
     }
-  
+
     fetchBuses();
   }, []);
-  
+
   function removeBus(id) {
-    setBuses((prevBuses) => prevBuses.filter(bus => bus.id !== id));
+    setBuses((prevBuses) => prevBuses.filter((bus) => bus.id !== id));
   }
 
-  async function createBus() {    
+  async function createBus() {
     try {
       const addedBus = await addBus(newBus);
       if (addedBus) {
@@ -44,16 +46,16 @@ export default function WaldenBuses() {
     }
   }
 
-  const filteredBuses = buses.filter(bus =>
+  const filteredBuses = buses.filter((bus) =>
     bus.number.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div>
-       <button className="back-button" onClick={() => navigate(-1)} >
+      <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Go Back
       </button>
-      
+
       <h2 className="header">Walden Buses</h2>
 
       <div className="bus-container">
@@ -73,14 +75,14 @@ export default function WaldenBuses() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="searchBar"
       />
-<div className="bus-container">
-      {filteredBuses.length > 0 ? (
-        filteredBuses.map(bus => (
-          <SingleBus key={bus.id} bus={bus} removeBus={removeBus} />
-        ))
-      ) : (
-        <p>No buses found</p>
-      )}
+      <div className="bus-container">
+        {filteredBuses.length > 0 ? (
+          filteredBuses.map((bus) => (
+            <SingleBus key={bus.id} bus={bus} removeBus={removeBus} />
+          ))
+        ) : (
+          <p>No buses found</p>
+        )}
       </div>
     </div>
   );

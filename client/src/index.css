@@ -1,5 +1,5 @@
 body {
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Brush Script MT", cursive;
   background-color: rgb(237, 219, 97);
   color: rgb(4, 4, 183);
 }
@@ -29,20 +29,20 @@ body {
   outline: none;
 }
 
-h2, h3 {
+h2,
+h3 {
   display: flex;
   justify-content: center;
 }
 
-.info-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 1em;
-    margin: 1em;
-    gap:2em;
-    flex-wrap: wrap;
-
+.info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1em;
+  margin: 1em;
+  gap: 2em;
+  flex-wrap: wrap;
 }
 
 .school-container {
@@ -65,7 +65,7 @@ h2, h3 {
   padding: 1em;
   margin: 0.5em;
   box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
 }
 
 .school-card img {
@@ -99,7 +99,7 @@ h2, h3 {
   margin: 0.5em;
   gap: 0.5em;
   box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
 }
 
 .user-img {
@@ -113,30 +113,27 @@ h2, h3 {
 button {
   background: rgb(245, 230, 64);
   border-radius: 0.5em;
-  box-shadow: 0 0 0.5em rgba(0, 0, 0, .1);
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.1);
   border: solid;
   cursor: pointer;
   font-size: 1em;
   color: rgb(4, 4, 183);
   font-weight: 550;
-  height:3em;
+  height: 3em;
 }
 
-.submit-button{
-margin-top: 1em;
-
+.submit-button {
+  margin-top: 1em;
 }
 
-.update-button{
-border: solid, rgb(4, 4, 183);
-font-size: small;
-background-color: rgb(76, 179, 76);
-height: 2em;
-
+.update-button {
+  border: solid, rgb(4, 4, 183);
+  font-size: small;
+  background-color: rgb(76, 179, 76);
+  height: 2em;
 }
 
-.delete-button{
-
+.delete-button {
   background-color: rgb(224, 5, 5);
   color: white;
   font-size: x-small;
@@ -183,7 +180,5 @@ height: 2em;
   .user-info {
     align-items: center;
     padding-left: 0;
-
   }
-
 }

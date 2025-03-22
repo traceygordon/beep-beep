@@ -1,6 +1,5 @@
 const BASE_API = "http://localhost:3000/api";
 
-
 // USERS
 export async function getUsers() {
   try {
@@ -13,10 +12,9 @@ export async function getUsers() {
   }
 }
 
-
 export async function addUser(user) {
   try {
-    const response = await fetch(`${BASE_API}/users/register`, { 
+    const response = await fetch(`${BASE_API}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +49,6 @@ export async function loginUser(credentials) {
   }
 }
 
-
 export async function deleteUser(userId) {
   try {
     const response = await fetch(BASE_API + `/users/${userId}`, {
@@ -74,14 +71,13 @@ export async function getBuses() {
     const response = await fetch(BASE_API + "/buses");
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    const buses = await response.json(); 
+    const buses = await response.json();
     return buses;
   } catch (err) {
     console.error("Error fetching buses:", err);
     return [];
   }
 }
-
 
 export async function addBus(newBus) {
   try {
@@ -101,7 +97,6 @@ export async function addBus(newBus) {
     console.error("Error adding bus:", err);
   }
 }
-
 
 export async function deleteBus(busId) {
   try {

@@ -11,7 +11,7 @@ export default function Register({ setToken }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    
+
     if (formData.username.length < 1) {
       setNameError("Stop! You need a username to get on the bus.");
       return;
@@ -20,20 +20,18 @@ export default function Register({ setToken }) {
       setPasswordError("Slow down. You need a password to roll on.");
       return;
     }
-  
+
     try {
       const result = await addUser({
         username: formData.username,
         password: formData.password,
       });
-        setToken(result.token);
+      setToken(result.token);
       navigate("/");
-  
     } catch (error) {
       setError(error.message);
     }
   }
-  
 
   return (
     <div className="info-container">
@@ -68,7 +66,9 @@ export default function Register({ setToken }) {
           {passwordError && <p>{passwordError}</p>}
         </label>
         <br />
-        <button className="submit-button" type="submit">Go to Login</button>
+        <button className="submit-button" type="submit">
+          Go to Login
+        </button>
       </form>
     </div>
   );

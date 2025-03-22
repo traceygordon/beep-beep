@@ -76,7 +76,7 @@ app.get("/api/buses", async (req, res, next) => {
 });
 
 app.get("/api/buses/:id", async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     const SQL = `
           SELECT * FROM buses WHERE id=$1;
@@ -116,7 +116,7 @@ app.get("/api/schools/walden", async (req, res, next) => {
 app.post("/api/users/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const SQL = `INSERT INTO users(username, password) VALUES($1, $2) RETURNING *`;
@@ -136,7 +136,9 @@ app.post("/api/users/login", async (req, res, next) => {
     const user = result.rows[0];
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password username" });
+      return res
+        .status(401)
+        .json({ error: "Invalid username or password username" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -325,7 +327,6 @@ INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
   app.listen(port, () => console.log(`listening on port ${port}`));
 };
 
-
 async function startServer() {
   await client.connect();
   const port = process.env.PORT || 3000;
@@ -334,6 +335,6 @@ async function startServer() {
 
 startServer();
 
-module.exports={
-init:init
-}
+module.exports = {
+  init: init,
+};

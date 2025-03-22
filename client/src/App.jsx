@@ -8,30 +8,27 @@ import Buses from "./components/Buses";
 import WaldenBuses from "./components/WaldenBuses";
 import PineRidgeBuses from "./components/PineRidgeBuses";
 
-
 function App() {
-   const [token, setToken] = useState(localStorage.getItem("token") || "");
-
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   return (
     <>
-    
-      <Navigation setToken={setToken} token={token}/>
+      <Navigation setToken={setToken} token={token} />
       <Routes>
-
         <Route path="/" element={<Login setToken={setToken} token={token} />} />
 
-        <Route path="/register" element={<Register setToken={setToken}/>} />
+        <Route path="/register" element={<Register setToken={setToken} />} />
 
-        <Route path="/account" element={<Account setToken={setToken} token={token} />}/>
+        <Route
+          path="/account"
+          element={<Account setToken={setToken} token={token} />}
+        />
 
-        <Route path="/buses" element={<Buses token={token} />}/>
+        <Route path="/buses" element={<Buses token={token} />} />
 
         <Route path="/buses/pine-ridge" element={<PineRidgeBuses />} />
-        
+
         <Route path="/buses/walden" element={<WaldenBuses />} />
-      
-    
       </Routes>
     </>
   );

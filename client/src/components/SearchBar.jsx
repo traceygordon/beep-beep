@@ -26,10 +26,16 @@ export default function SearchBar({ onSearch, onFilterRow, availableRows }) {
         className="search-input"
       />
 
-      <select value={selectedRow} onChange={handleRowChange} className="row-dropdown">
+      <select
+        value={selectedRow}
+        onChange={handleRowChange}
+        className="row-dropdown"
+      >
         <option value="">All Rows</option>
-        {availableRows.map(row => (
-          <option key={row} value={row}>{row}</option>
+        {availableRows.map((row) => (
+          <option key={row} value={row}>
+            {row}
+          </option>
         ))}
       </select>
     </div>
