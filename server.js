@@ -157,11 +157,11 @@ app.post("/api/users/login", async (req, res, next) => {
   }
 });
 
-app.post("/api/buses", async (req, res, next) => {
+app.post("/api/buses/register", async (req, res, next) => {
   try {
-    const { number, schoolid } = req.body;
-    const SQL = `INSERT INTO buses(number, schoolid) VALUES($1, $2) RETURNING *`;
-    const result = await client.query(SQL, [number, schoolid]);
+    const { number, row } = req.body;
+    const SQL = `INSERT INTO buses(number, row) VALUES($1, $2) RETURNING *`;
+    const result = await client.query(SQL, [number, row]);
 
     res.json(result.rows[0]);
   } catch (ex) {

@@ -1,18 +1,15 @@
-/* General styles */
 body {
   font-family: 'Brush Script MT', cursive;
   background-color: rgb(237, 219, 97);
   color: rgb(4, 4, 183);
 }
 
-/* Image styling */
 .main-img {
   padding: 0.5em;
   height: 5em;
   width: 10em;
 }
 
-/* Navbar adjustments */
 .navbar {
   display: flex;
   flex-direction: row;
@@ -20,7 +17,6 @@ body {
   font-size: small;
 }
 
-/* Search bar */
 .searchBar {
   width: 100%;
   position: relative;
@@ -28,11 +24,11 @@ body {
   border-right: none;
   padding: 5px;
   height: 20px;
+  margin-top: 2em;
   border-radius: 5em;
   outline: none;
 }
 
-/* Center headings */
 h2, h3 {
   display: flex;
   justify-content: center;
@@ -49,7 +45,6 @@ h2, h3 {
 
 }
 
-/* School container */
 .school-container {
   display: flex;
   flex-direction: row;
@@ -59,7 +54,6 @@ h2, h3 {
   flex-wrap: wrap;
 }
 
-/* School card */
 .school-card {
   background: rgb(245, 230, 64);
   display: flex;
@@ -85,7 +79,6 @@ h2, h3 {
   border: 0.06em solid black;
 }
 
-/* Bus container */
 .bus-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -93,7 +86,6 @@ h2, h3 {
   margin-top: 20px;
 }
 
-/* Bus card */
 .bus-card {
   display: flex;
   flex-direction: column;
@@ -153,7 +145,7 @@ height: 2em;
   width: 5em;
 }
 
-/* Responsive design for mobile */
+/* MOBILE */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;

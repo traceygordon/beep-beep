@@ -83,14 +83,14 @@ export async function getBuses() {
 }
 
 
-export async function addBus(bus) {
+export async function addBus(newBus) {
   try {
-    const response = await fetch(`${BASE_API}/buses`, {
+    const response = await fetch(`${BASE_API}/buses/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(bus),
+      body: JSON.stringify(newBus),
     });
 
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);

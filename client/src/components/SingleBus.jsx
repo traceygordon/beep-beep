@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { deleteBus } from "../api";
+import { addBus, deleteBus } from "../api";
 
 export default function SingleBus({ bus }) {
   const parkingRows = bus.schoolid === 1 
-    ? [1, 2, 3, 4] 
-    : [1, 2, 3];  
+    ? [0, 1, 2, 3, 4] 
+    : [0, 1, 2, 3];  
 
   const [selectedRow, setSelectedRow] = useState(bus.row);
   const [busNumber, setBusNumber] = useState(bus.number);
@@ -16,6 +16,7 @@ export default function SingleBus({ bus }) {
   function handleNumberChange(event) {
     setBusNumber(event.target.value);
   }
+
 
   async function handleUpdate() {
     try {
@@ -45,7 +46,7 @@ export default function SingleBus({ bus }) {
 
   return (
     <div className="bus-card">
-      <h3>Number: {busNumber} Row: {selectedRow}</h3>
+      <h3>{busNumber} Row: {selectedRow}</h3>
       <label className="bus-num">
         Update Number:
         <input 
@@ -75,5 +76,6 @@ export default function SingleBus({ bus }) {
         Delete Bus
       </button>
     </div>
+    
   );
 }
