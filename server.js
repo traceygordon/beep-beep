@@ -91,7 +91,8 @@ app.get("/api/buses/:id", async (req, res, next) => {
 app.get("/api/schools/pine-ridge", async (req, res, next) => {
   try {
     const result = await client.query(
-      `SELECT * FROM buses WHERE schoolid = (SELECT id FROM schools WHERE name = 'Pine Ridge');`
+      // `SELECT * FROM buses;`
+      `SELECT * FROM buses WHERE schoolid=2;`
     );
     res.json(result.rows);
   } catch (err) {
@@ -161,9 +162,9 @@ app.post("/api/users/login", async (req, res, next) => {
 
 app.post("/api/buses/register", async (req, res, next) => {
   try {
-    const { number, row } = req.body;
-    const SQL = `INSERT INTO buses(number, row) VALUES($1, $2) RETURNING *`;
-    const result = await client.query(SQL, [number, row]);
+    const { number, row, schoolid } = req.body;
+    const SQL = `INSERT INTO buses(number, row, schoolid) VALUES($1, $2, $3) RETURNING *`;
+    const result = await client.query(SQL, [number, row, schoolid]);
 
     res.json(result.rows[0]);
   } catch (ex) {

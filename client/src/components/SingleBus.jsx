@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addBus, deleteBus } from "../api";
+import { deleteBus } from "../api";
 
 export default function SingleBus({ bus }) {
   const parkingRows = bus.schoolid === 1 ? [0, 1, 2, 3, 4] : [0, 1, 2, 3];

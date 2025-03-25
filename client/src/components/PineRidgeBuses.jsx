@@ -34,7 +34,8 @@ export default function PineRidgeBuses() {
     setBuses((prevBuses) => prevBuses.filter((bus) => bus.id !== id));
   }
 
-  async function createBus() {
+  async function createBus(newBus) {
+    console.log(newBus)
     try {
       const addedBus = await addBus(newBus);
       if (addedBus) {
@@ -65,7 +66,7 @@ export default function PineRidgeBuses() {
           value={newBus.number}
           onChange={(e) => setNewBus({ ...newBus, number: e.target.value })}
         />
-        <button onClick={createBus}>Add Bus</button>
+        <button onClick={() => createBus(newBus)}>Add Bus</button>
       </div>
 
       <input
