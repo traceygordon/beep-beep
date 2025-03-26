@@ -1,13 +1,13 @@
 // imports here
-const express = require("express");
-const path = require("path");
-const pg = require("pg");
-const app = express();
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
-const client = new pg.Client(
+import express from ('express')
+import path from ("path");
+import pg  from ("pg");
+app = express();
+import cors  from ("cors");
+import bcrypt  from ("bcrypt");
+import jwt  from ("jsonwebtoken");
+SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
+client = new pg.Client(
   process.env.DATABASE_URL ||
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
 );
