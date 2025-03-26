@@ -13,7 +13,7 @@ export default function WaldenBuses({token}) {
     async function fetchBuses() {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/schools/walden"
+          "https://beep-beep.onrender.com/api/schools/walden"
         );
 
         if (!response.ok) {

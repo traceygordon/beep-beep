@@ -18,7 +18,7 @@ export default function SingleBus({ bus }) {
   async function handleUpdate() {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/buses/${bus.id}`,
+        `https://beep-beep.onrender.com/api/buses/${bus.id}`,
         {
           method: "PATCH",
           headers: {

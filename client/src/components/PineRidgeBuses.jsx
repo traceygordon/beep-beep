@@ -13,7 +13,7 @@ export default function PineRidgeBuses({token}) {
     async function fetchBuses() {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/schools/pine-ridge"
+          "https://beep-beep.onrender.com/api/schools/pine-ridge"
         );
 
         if (!response.ok) {

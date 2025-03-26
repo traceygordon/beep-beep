@@ -11,7 +11,7 @@ export default function Account({ setToken, token }) {
   useEffect(() => {
     async function getUserDetails(token) {
       try {
-        const response = await fetch("http://localhost:3000/api/users/me", {
+        const response = await fetch("https://beep-beep.onrender.com/api/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default function Account({ setToken, token }) {
   async function handleUpdate() {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/${user.id}`,
+        `https://beep-beep.onrender.com/api/users/${user.id}`,
         {
           method: "PATCH",
           headers: {
