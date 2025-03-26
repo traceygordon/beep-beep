@@ -51,7 +51,7 @@ export default function PineRidgeBuses({token}) {
   );
 
   return (
-    token ? (
+    
     <div>
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Go Back
@@ -86,6 +86,6 @@ export default function PineRidgeBuses({token}) {
           <p>No buses found</p>
         )}
       </div>
-    </div>) : (<p>No Parking! You must be logged in to view this page</p>)
+    </div>
   );
 }
