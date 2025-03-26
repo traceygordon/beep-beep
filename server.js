@@ -2,11 +2,11 @@
 import express from ('express')
 import path from ("path");
 import pg  from ("pg");
-app = express();
+const app = express();
 import cors  from ("cors");
 import bcrypt  from ("bcrypt");
 import jwt  from ("jsonwebtoken");
-SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
+const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
 client = new pg.Client(
   process.env.DATABASE_URL ||
     "postgres://postgres:2182@localhost:5432/beep_beep_db"
