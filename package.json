@@ -2,6 +2,7 @@
   "name": "beep-beep",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start:dev": "nodemon server.js",
     "start": "node server.js",
