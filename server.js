@@ -1,26 +1,35 @@
-// imports here
-import express from 'express'
-import path from "path";
-import pg  from "pg";
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import pg from 'pg';
+import cors from 'cors';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 const app = express();
-import cors  from "cors";
-import bcrypt  from "bcrypt";
-import jwt  from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
-const client = new pg.Client(
-  process.env.DATABASE_URL ||
-    "postgres://postgres:2182@localhost:5432/beep_beep_db"
-);
+
+// Define __filename and __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const client = new pg.Client({
+  connectionString:
+    process.env.DATABASE_URL ||
+    "postgres://postgres:2182@localhost:5432/beep_beep_db",
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
+// Connect to the database
+client.connect().catch((err) => console.error('Database connection error:', err));
 
 app.use(express.json());
 app.use(cors());
 
-// static routes here
+// Serve static files from the client build directory
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "../client/dist/index.html"))
 );
-
 //Verify JWT tokens
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
