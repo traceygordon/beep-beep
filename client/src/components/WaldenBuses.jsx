@@ -3,7 +3,7 @@ import SingleBus from "./SingleBus";
 import { useNavigate } from "react-router-dom";
 import { addBus } from "../api/index";
 
-export default function WaldenBuses() {
+export default function WaldenBuses({token}) {
   const [buses, setBuses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newBus, setNewBus] = useState({ number: "", row: 0, schoolid: 1 });
@@ -51,6 +51,7 @@ export default function WaldenBuses() {
   );
 
   return (
+    token ? (
     <div>
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Go Back
@@ -84,6 +85,6 @@ export default function WaldenBuses() {
           <p>No buses found</p>
         )}
       </div>
-    </div>
+    </div>) : (<p>No Parking! You must be logged in to view this page</p>)
   );
 }

@@ -66,6 +66,7 @@ export default function Account({ setToken, token }) {
   }
 
   return (
+    token ? (
     <div className="info-container">
       <div className="profile">
         <img className="user-img" src="/frizz.jpg" alt="Ms. Frizzle" />
@@ -93,6 +94,6 @@ export default function Account({ setToken, token }) {
           Delete account
         </button>
       </div>
-    </div>
+    </div>) : (<p>No Parking! You must be logged in to view this page</p>)
   );
 }

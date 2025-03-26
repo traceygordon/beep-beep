@@ -3,7 +3,7 @@ import SingleBus from "./SingleBus";
 import { useNavigate } from "react-router-dom";
 import { addBus } from "../api/index";
 
-export default function PineRidgeBuses() {
+export default function PineRidgeBuses({token}) {
   const [buses, setBuses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newBus, setNewBus] = useState({ number: "", row: 0, schoolid: 2 });
@@ -35,7 +35,6 @@ export default function PineRidgeBuses() {
   }
 
   async function createBus(newBus) {
-    console.log(newBus)
     try {
       const addedBus = await addBus(newBus);
       if (addedBus) {
@@ -52,6 +51,7 @@ export default function PineRidgeBuses() {
   );
 
   return (
+    token ? (
     <div>
       <button className="back-button" onClick={() => navigate(-1)}>
         ⬅ Go Back
@@ -86,6 +86,6 @@ export default function PineRidgeBuses() {
           <p>No buses found</p>
         )}
       </div>
-    </div>
+    </div>) : (<p>No Parking! You must be logged in to view this page</p>)
   );
 }
