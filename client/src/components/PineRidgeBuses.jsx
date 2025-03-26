@@ -28,6 +28,8 @@ export default function PineRidgeBuses({token}) {
     }
 
     fetchBuses();
+    fetchBuses();
+
   }, []);
 
   function removeBus(id) {
