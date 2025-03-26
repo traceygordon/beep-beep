@@ -90,7 +90,7 @@ app.get("/api/buses/:id", async (req, res, next) => {
     const SQL = `
           SELECT * FROM buses WHERE id=$1;
         `;
-    const response = await client.query(SQL, [id]);
+    const response = await client.query(SQL, [Number(id)]);
     res.send(response.rows[0]);
   } catch (ex) {
     next(ex);
