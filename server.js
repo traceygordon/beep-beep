@@ -26,9 +26,9 @@ app.use(express.json());
 app.use(cors());
 
 // Serve static files from the client build directory
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 app.get("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"))
+  res.sendFile(path.join(__dirname, "dist", "index.html"))
 );
 //Verify JWT tokens
 function authenticateToken(req, res, next) {
