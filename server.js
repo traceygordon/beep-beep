@@ -338,7 +338,7 @@ INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
 };
 
 async function startServer() {
-  await client.connect();
+  // await client.connect();
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`listening on port ${port}`));
 }
