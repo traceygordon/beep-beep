@@ -1,4 +1,4 @@
-const BASE_API = "http://localhost:3000/api";
+const BASE_API = "https://beep-beep.onrender.com/api";
 
 // USERS
 export async function getUsers() {
