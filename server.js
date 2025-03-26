@@ -1,11 +1,11 @@
 // imports here
-import express from ('express')
-import path from ("path");
-import pg  from ("pg");
+import express from 'express'
+import path from "path";
+import pg  from "pg";
 const app = express();
-import cors  from ("cors");
-import bcrypt  from ("bcrypt");
-import jwt  from ("jsonwebtoken");
+import cors  from "cors";
+import bcrypt  from "bcrypt";
+import jwt  from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
 client = new pg.Client(
   process.env.DATABASE_URL ||
