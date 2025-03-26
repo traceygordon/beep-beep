@@ -239,7 +239,7 @@ app.delete("/api/buses/:id", async (req, res, next) => {
 
 // create your init function
 const init = async () => {
-  await client.connect();
+  // await client.connect();
 
   const SQL = `
 DROP TABLE IF EXISTS buses CASCADE;
@@ -323,9 +323,9 @@ INSERT INTO buses (number, row, schoolid) VALUES ('225', 2, 2);
 
   await client.query(SQL);
 
-  const port = process.env.PORT || 3000;
+  // const port = process.env.PORT || 3000;
 
-  app.listen(port, () => console.log(`listening on port ${port}`));
+  // app.listen(port, () => console.log(`listening on port ${port}`));
 };
 
 async function startServer() {
