@@ -246,6 +246,10 @@ app.delete("/api/buses/:id", async (req, res, next) => {
   }
 });
 
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"))
+);
+
 // create your init function
 const init = async () => {
   // await client.connect();
